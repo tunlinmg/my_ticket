@@ -27,10 +27,3 @@ Route::delete('/delete/{slug}', [TicketController::class, 'destroy'])->name('tic
 
 Route::get('/create',[TicketController::class,'create']);
 Route::post('/create',[TicketController::class,'store']);
-
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

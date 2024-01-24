@@ -1,6 +1,5 @@
-
-@extends('layouts.app')
-@section('title', 'Index Page') 
+@extends('layout.master')
+@section('title', 'Index Page')
 @section('content')
 <div class="container col-md-8 col-md-offset-2">
     <div class="panel panel-default">
@@ -10,36 +9,36 @@
         @if($tickets->isEmpty())
         <p>There is no Ticket.</p>
         @else
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="tickets-table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($tickets as $ticket)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $ticket->title }}</td>
-                            <td>{{ $ticket->status ? 'Pending' : 'Answered' }}</td>
-                            <td>
-                                <a href="{{ url('/show', $ticket->slug) }}" class="btn btn-info btn-sm">View</a>
-                                <a href="{{ url('/edit', $ticket->slug) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ url('/delete', $ticket->slug) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="tickets-table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($tickets as $ticket)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $ticket->title }}</td>
+                        <td>{{ $ticket->status ? 'Pending' : 'Answered' }}</td>
+                        <td>
+                            <a href="{{ url('/show', $ticket->slug) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ url('/edit', $ticket->slug) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ url('/delete', $ticket->slug) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
         @endif
     </div>

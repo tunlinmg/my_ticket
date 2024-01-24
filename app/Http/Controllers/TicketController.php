@@ -14,8 +14,6 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-
     public function index()
     {
         //
@@ -117,6 +115,8 @@ class TicketController extends Controller
         // If the ticket is not found, return a 404 response
         return abort(404);
     }
+
+
     
     }
 }
