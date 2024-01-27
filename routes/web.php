@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,3 +32,15 @@ Route::delete('/delete/{slug}', [TicketController::class, 'destroy'])->name('tic
 
 Route::get('/create',[TicketController::class,'create']);
 Route::post('/create',[TicketController::class,'store']);
+
+Auth::routes();
+
+Route::get('/home2', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::resources([
+    'roles' => RoleController::class,
+    'users' => UserController::class,
+    'products' => ProductController::class,
+]);
