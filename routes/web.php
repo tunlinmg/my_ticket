@@ -7,6 +7,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +47,7 @@ Route::resources([
     'roles' => RoleController::class,
     'users' => UserController::class,
     'products' => ProductController::class,
+    'comments' => CommentController::class,
+    'categoriess' => CategoryController::class,
 ]);
+Route::get('/comments/destroy/{comment}', [CommentController::class,'destroy']);

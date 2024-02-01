@@ -13,4 +13,13 @@ class Product extends Model
         'name',
         'description'
     ];
+
+    public function category()
+    {
+        return $this->belongTo('App\Models\Category');
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

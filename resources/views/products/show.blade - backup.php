@@ -36,12 +36,20 @@
                       </li>
                       @foreach($product->comments as $comment)
                         <li class="list-group-item">
-                            <a href="{{url("/comments/destroy/$comment->id")}}" class="btn-close float-end"> </a> 
 
 
                             {{ $comment->content }}
 
-                           
+                           <!-- @auth-->
+                                <form action="{{ route('comments.destroy', $comment) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    @can('delete-comment')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this comment?');"><i class="bi bi-trash"></i> Delete</button>
+                                    @endcan
+                                </form>
+                            <!--//@endauth-->
 
                             <div class="small mt-2">
                               By <b> {{ $comment->user->name}} </b>
