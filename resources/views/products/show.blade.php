@@ -38,17 +38,12 @@
                         <li class="list-group-item">
                             <a href="{{url("/comments/destroy/$comment->id")}}" class="btn-close float-end"> </a> 
 
-
                             {{ $comment->content }}
-
-                           
 
                             <div class="small mt-2">
                               By <b> {{ $comment->user->name}} </b>
                               {{$comment->created_at->diffForHumans()}}
                             </div>
-
-
                         </li>
                       @endforeach
                     </ul>
@@ -56,14 +51,11 @@
                     @auth
                     <form action="{{ route('comments.store') }}" method="post">
                       @csrf
-
-                      
                       <input type="hidden" name="product_id" value="{{ $product->id }}">
                       <textarea name="content" class="form-control mb-2" placeholder="New Comment"></textarea>
                       <input type="submit" value="Add Comment" class="btn btn-secondary">
                     </form>
                     @endauth
-
         
             </div>
         </div>

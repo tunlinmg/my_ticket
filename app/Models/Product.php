@@ -11,12 +11,13 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'category_id'
     ];
 
     public function category()
     {
-        return $this->belongTo('App\Models\Category');
+        return $this->belongsTo('App\Models\Category');
     }
     public function comments()
     {

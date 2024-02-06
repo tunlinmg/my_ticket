@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -23,7 +24,13 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:250',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'category_id' => [
+                'required',
+                'integer',
+                Rule::exists('categories', 'id'), // Ensure category exists
+            ],
+            // Add other validation rules for additional fields if needed
         ];
     }
 }

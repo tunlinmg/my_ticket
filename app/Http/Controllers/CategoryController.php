@@ -6,22 +6,49 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 class CategoryController extends Controller
 {
     /**
+     * Instantiate a new ProductController instance.
+     */
+    public function __construct()
+    {
+       $this->middleware('auth');
+       /** $this->middleware('permission:create-category|edit-category|delete-category, ['only' => ['index','show']]);
+       
+       $this->middleware('permission:create-category', ['only' => ['create','store']]);
+       $this->middleware('permission:edit-category', ['only' => ['edit','update']]);
+       $this->middleware('permission:delete-category', ['only' => ['destroy']]);
+       */
+    }
+
+
+    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         //
+        //$categories = Category::latest()->paginate(10); // Retrieve categories
+        //return view('categories.index', compact('categories')); // Pass to the view
+
+        return view('categories.index', [
+            'categories' => Category::latest()->paginate(10)
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         //
+            {
+        return view('categories.create');
+    }
+
     }
 
     /**
@@ -38,6 +65,10 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        return view('categories.show', [
+            'category' => $category
+        ]);
+
     }
 
     /**

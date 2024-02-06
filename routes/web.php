@@ -23,23 +23,10 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-// Route::get('/', function () {return view('welcome');});
-
-Route::get('/',[TicketController::class,'index']);
-
-Route::get('/show/{slug}', [TicketController::class, 'show']);
-
-Route::get('/edit/{slug}', [TicketController::class, 'edit']);
-Route::post('/edit/{slug}', [TicketController::class, 'update']);
-
-Route::delete('/delete/{slug}', [TicketController::class, 'destroy'])->name('tickets.destroy');
-
-Route::get('/create',[TicketController::class,'create']);
-Route::post('/create',[TicketController::class,'store']);
 
 Auth::routes();
 
-Route::get('/home2', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -48,6 +35,6 @@ Route::resources([
     'users' => UserController::class,
     'products' => ProductController::class,
     'comments' => CommentController::class,
-    'categoriess' => CategoryController::class,
+    'categories' => CategoryController::class,
 ]);
 Route::get('/comments/destroy/{comment}', [CommentController::class,'destroy']);

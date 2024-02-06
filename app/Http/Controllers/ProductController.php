@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -38,7 +40,8 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view('products.create');
+        $categories = Category::all(); // Assuming 'Category' is your model
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -46,9 +49,17 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): RedirectResponse
     {
-        Product::create($request->all());
-        return redirect()->route('products.index')
+            try {
+            Product::create($request->all());
+            return redirect()->route('products.create')
                 ->withSuccess('New product is added successfully.');
+        } catch (\Exception $exception) {
+            // Log the error for debugging
+            Log::error('Error creating product: ' . $exception->getMessage());
+
+            // Redirect back to the create form with a clear error message
+            return redirect()->back()->withErrors(['error' => 'Failed to create product. Please try again.']);
+        }
     }
 
     /**

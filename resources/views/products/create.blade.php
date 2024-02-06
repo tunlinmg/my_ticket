@@ -2,9 +2,22 @@
 
 @section('content')
 
-<div class="row justify-content-center">
-    <div class="col-md-8">
 
+
+<div class="row justify-content-center">
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    
+@endif
+
+    <div class="col-md-8">
         <div class="card">
             <div class="card-header">
                 <div class="float-start">
@@ -37,7 +50,31 @@
                             @endif
                         </div>
                     </div>
-                    
+
+                    <div class="mb-3 row">
+                        <label for="category" class="col-md-4 col-form-label text-md-end text-start">Category</label>
+                        <div class="col-md-6">
+                            <select class="form-select @error('category') is-invalid @enderror" id="category" name="category_id">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!--div class="mb-3 row">
+                        <label for="image" class="col-md-4 col-form-label text-md-end text-start">Image</label>
+                        <div class="col-md-6">
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+                            @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div -->
+
                     <div class="mb-3 row">
                         <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Product">
                     </div>
