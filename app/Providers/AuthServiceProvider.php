@@ -25,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('Super Admin') ? true : null;
         });
 
+        // comment delete allow only owner
         $this->registerPolicies();
         Gate::define('comment-delete', function($user, $comment) {
             return $user->id == $comment->user_id;

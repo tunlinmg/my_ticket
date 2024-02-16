@@ -7,7 +7,7 @@ use App\Http\Requests\TicketFormRequest;
 use App\Models\Ticket;
 //use App\Http\Controllers\TicketController;
 
-
+//use Illuminate\View\View;
 
 class TicketController extends Controller
 {
@@ -15,10 +15,12 @@ class TicketController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+    
     {
         //
         $tickets=Ticket::all();
-        return view('index',compact('tickets'));
+        return view('tickets.index',compact('tickets'));
+      
 
     }
 

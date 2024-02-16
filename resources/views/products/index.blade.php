@@ -7,22 +7,28 @@
         @can('create-product')
             <a href="{{ route('products.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Product</a>
         @endcan
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered" id="datatable">
             <thead>
-                <tr>
+                <tr id="hidden">
                 <th scope="col">S#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Action</th>
                 </tr>
+                <tr id="show">
+                <td scope="col">S#</td>
+                <td scope="col">Name</td>
+                <td scope="col">Description</td>
+                <td scope="col">Action</td>
+                </tr>
             </thead>
             <tbody>
                 @forelse ($products as $product)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
-                    <td>
+                    <td scope="row"><span>id : </span>{{ $loop->iteration }}</td>
+                    <td><span>name</span>{{ $product->name }}</td>
+                    <td><span>decription</span>{{ $product->description }}</td>
+                    <td><span>action</span>
                         <form action="{{ route('products.destroy', $product->id) }}" method="post">
                             @csrf
                             @method('DELETE')
@@ -53,4 +59,54 @@
 
     </div>
 </div>
+<script>
+/**  new DataTable('#datatable', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.header().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.header().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    }
+}); */
+    new DataTable('#datatable', {
+        initComplete: function () 
+        {
+            this.api()
+                .columns()
+                .every(function () {
+                    let column = this;
+                    let title = column.header().textContent;
+     
+                    // Check if the current column is the ID column
+                    if (title !== 'S#') {
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.header().replaceChildren(input);
+     
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    }
+                });
+        }
+    });
+</script>
 @endsection

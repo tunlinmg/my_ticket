@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <style type="text/css">
-    * {
+* {
     box-sizing: border-box;
     font-family: "Avenir", "Helvetica", sans-serif;
 }

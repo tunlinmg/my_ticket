@@ -32,5 +32,11 @@ class StoreProductRequest extends FormRequest
             ],
             // Add other validation rules for additional fields if needed
         ];
+         // Add image validation only if a file is present
+            if ($this->hasFile('image')) {
+                $rules['image'] = 'nullable|image|max:2048';
+            }
+
+            return $rules;
     }
 }

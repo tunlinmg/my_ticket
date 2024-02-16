@@ -14,6 +14,7 @@
                         </div>
                     @endif
 
+                    <div class="card-body">
                     {{ __('You are logged in!') }}
 
                     <p>This is your application dashboard.</p>
@@ -29,6 +30,29 @@
                         <a class="btn btn-warning" href="{{ route('products.index') }}">
                             <i class="bi bi-bag"></i> Manage Products</a>
                     @endcanany
+                    </div>
+
+                    <div class="card-body">
+                    @php
+                        $permissions = [
+                            ['roles', 'role'],
+                            ['users', 'user'],
+                            ['products', 'product'],
+                            ['categories', 'category'],
+                        ];
+                    @endphp
+
+                    @foreach ($permissions as $permission)
+
+                        @canany(['create-'.$permission[1] ,'edit-'.$permission[1],'delete-'.$permission[1] ])
+
+                            <a class="btn btn-warning" href="{{ route($permission[0].'.index') }}">
+                                <i class="bi bi-bag"></i> {{ 'Manage '.$permission[0] }}</a>
+                                &nbsp;
+                        @endcanany
+                    @endforeach
+
+                    </div>
                     <p>&nbsp;</p>
                 </div>
             </div>

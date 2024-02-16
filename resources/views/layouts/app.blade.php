@@ -13,8 +13,96 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Add these script and css for datatable -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- css for datatable is not need 
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    -->
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <style type="text/css">
+* {
+    box-sizing: border-box;
+    font-family: "Avenir", "Helvetica", sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    margin: 0;
+}
+
+/* Default table styles for this demo */
+table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 80%;
+}
+table tr {
+    background: white;
+    border-bottom: 1px solid;
+}
+table th, table td {
+    padding: 10px 20px;
+}
+table td span {
+    background: #eee;
+    color: dimgrey;
+    display: none;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 5px;
+    position: relative;
+    text-transform: uppercase;
+    top: 0;
+    left: 0;
+}
+
+/* Simple CSS for flexbox table on mobile */
+@media(max-width: 800px) {
+    table thead #hidden{
+        left: -9999px;
+        position: absolute;
+        visibility: hidden; 
+    }
+    table tr {
+        border-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    table td {
+        border: none; /* Remove border */
+        margin: 0 0 10px 0;
+        padding: 15px;
+        position: relative;
+        width: 100%;
+    }
+    table td span {
+        display: block;
+        background: #eee;
+        color: dimgrey;
+        border-radius: .5em;
+    }
+    table td p {
+        display: block;
+        margin: 1.5em 0 0 0;
+    }
+    .mobile {
+        display: block;
+        background: #eee;
+        color: dimgrey;
+        border-radius: .5em;
+        padding: 10px;
+    }
+}
+
+    </style>
+
+
+
 </head>
 <body>
     <div id="app">

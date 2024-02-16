@@ -24,6 +24,15 @@ use App\Http\Controllers\CategoryController;
 */
 
 
+Route::get('/tickets',[TicketController::class,'index']);
+Route::get('/show/{slug}', [TicketController::class, 'show']);
+Route::get('/edit/{slug}', [TicketController::class, 'edit']);
+Route::post('/edit/{slug}', [TicketController::class, 'update']);
+Route::delete('/delete/{slug}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+Route::get('/create',[TicketController::class,'create']);
+Route::post('/create',[TicketController::class,'store']);
+
+
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
