@@ -13,7 +13,13 @@ class Product extends Model
         'name',
         'description',
         'category_id',
-        'image'
+        'image',
+        'targeted_number',
+        'amount',
+        'user_id',
+        'agent_id',
+        'customer_id',
+
     ];
 
     public function category()
@@ -24,4 +30,10 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Comment');
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }

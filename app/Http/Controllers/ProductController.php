@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-
-
+use App\Models\User;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -19,7 +18,7 @@ class ProductController extends Controller
 {
     /**
      * Instantiate a new ProductController instance.
-     */
+     
     public function __construct()
     {
        $this->middleware('auth');
@@ -29,14 +28,54 @@ class ProductController extends Controller
        $this->middleware('permission:delete-product', ['only' => ['destroy']]);
     }
 
+    */
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        return view('products.index', [
+
+        // Fetch all products
+
+    $products = Product::latest()->paginate(10);
+
+    // Authorize each product individually
+    foreach ($products as $product) {$this->authorize('index', $product);}
+
+    if (auth()->user()->hasRole(['Admin', 'Super Admin'])) {
+            // If the user is Admin or Super Admin, fetch all products
+            $products = Product::latest()->paginate(10);
+        } else {
+            // Otherwise, fetch products posted by the current logged-in user
+            $products = Product::where('user_id', auth()->user()->id)
+                ->latest()->paginate(10);
+        }
+
+    // Return the view with products data
+    return view('products.index', compact('products'));
+
+        /*return view('products.index', [
             'products' => Product::latest()->paginate(10)
-        ]);
+        ]);*/
+        
+        /*
+        $this->authorize('show', Product::class);
+
+            if (auth()->user()->hasRole(['Admin', 'Super Admin'])) {
+            // If the user is Admin or Super Admin, fetch all products
+            $products = Product::latest()->paginate(10);
+        } else {
+            // Otherwise, fetch products posted by the current logged-in user
+            $products = Product::where('user_id', auth()->user()->id)
+                ->latest()->paginate(10);
+        }
+
+        return view('products.index', compact('products'));
+        */
+
+    
+
     }
 
     /**
@@ -44,9 +83,14 @@ class ProductController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('create', Product::class);
+
         $categories = Category::all(); // Assuming 'Category' is your model
-        return view('products.create', compact('categories'));
+        $users = User::all(); // Assuming 'Category' is your model
+        return view('products.create', compact('categories', 'users'));
+        
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -54,7 +98,8 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request): RedirectResponse
     {
         try {
-        // IMAGE UPLOAD HANDLING (before product creation)
+
+            // IMAGE UPLOAD HANDLING (before product creation)
             $image = $request->file('image');
             $imageName = null;
 
@@ -66,12 +111,18 @@ class ProductController extends Controller
                 $imagePath = $image->storeAs('public/product_images', $imageName);
             }
 
-        // PRODUCT CREATION WITH IMAGE PATH (if applicable)
+            // PRODUCT CREATION WITH IMAGE PATH (if applicable)
             Product::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'category_id' => $request->category_id,
                 'image' => $imageName, // Add the original name field or null
+                'amount' => $request->amount, // Add the amount field
+                'targeted_number' => $request->targeted_number, // Add the targeted_number field
+                'user_id' => auth()->user()->id,
+                'agent_id' => $request->agent_id,
+                'customer_id' => $request->customer_id,
+                
             ]);
             return redirect()->route('products.create')
                 ->withSuccess('New product is added successfully.');
@@ -90,7 +141,8 @@ class ProductController extends Controller
     public function show(Product $product): View
     {
         //$categories = Category::all();
-
+        $this->authorize('show', $product);
+        
         return view('products.show', [
             'product' => $product,
             //'categories' => $categories,
@@ -102,6 +154,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
+
         // Retrieve categories
         $categories = Category::all();
 
@@ -119,6 +172,8 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
+        $this->authorize('update', $product);
+
         try {
             // Delete the old image file if it exists
             if ($product->image) {
@@ -165,6 +220,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
+        $this->authorize('delete', $product);
         $product->delete();
         return redirect()->route('products.index')
                 ->withSuccess('Product is deleted successfully.');

@@ -37,5 +37,22 @@ class SuperAdminSeeder extends Seeder
             'password' => Hash::make('muqeet1234')
         ]);
         $productManager->assignRole('Product Manager');
+
+        // Creating Product agent User
+        $agent = User::create([
+            'name' => 'Mr Agent', 
+            'email' => 'agent@allphptricks.com',
+            'password' => Hash::make('agent1234')
+        ]);
+        $agent->assignRole('Agent');
+
+        // Creating Product Customer User
+        $customer = User::create([
+            'name' => 'Mr Customer', 
+            'email' => 'customer@allphptricks.com',
+            'password' => Hash::make('customer1234')
+        ]);
+        $customer->assignRole('Customer');
+
     }
 }

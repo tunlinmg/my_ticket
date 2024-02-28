@@ -15,9 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->text('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('image')->nullable();  // Add this line for the image column
             $table->timestamps();
+            $table->integer('targeted_number'); // Add the number field
+            $table->integer('amount'); // Add the amount field 
+            $table->unsignedBigInteger('user_id'); // Add the user_id field
+            $table->unsignedBigInteger('agent_id'); // Add the agent_id field
+            $table->unsignedBigInteger('customer_id'); // Add the customer_id field
+
         });
     }
 

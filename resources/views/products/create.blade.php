@@ -44,7 +44,7 @@
                     <div class="mb-3 row">
                         <label for="description" class="col-md-4 col-form-label text-md-end text-start">Description</label>
                         <div class="col-md-6">
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') }}</textarea>
+                            <textarea class="text-editor form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') }}</textarea>
                             @if ($errors->has('description'))
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
                             @endif
@@ -64,6 +64,85 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="mb-3 row">
+                        <label for="targeted_number" class="col-md-4 col-form-label text-md-end text-start">Targeted Number</label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control @error('targeted_number') is-invalid @enderror" id="targeted_number" name="targeted_number" value="{{ old('targeted_number') }}">
+                            @error('targeted_number')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <!-- div class="mb-3 row">
+                        <label for="agent_id" class="col-md-4 col-form-label text-md-end">Agent ID</label>
+                        <div class="col-md-6">
+                            <select name="agent_id" id="agent_id" class="form-control">
+                                <option value="">Select Customer</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="customer_id" class="col-md-4 col-form-label text-md-end">Customer ID</label>
+                        <div class="col-md-6">
+                            <select name="customer_id" id="customer_id" class="form-control">
+                                <option value="">Select Customer</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div -->
+                    <!-- Agent or Customer ID based on user role -->
+                    @if (Auth::check())
+                        @if (Auth::user()->hasRole('Agent') || Auth::user()->hasRole('Admin')|| Auth::user()->hasRole('Super Admin'))
+                            <!-- Agent ID (current user ID) -->
+                            <input type="hidden" name="agent_id" value="{{ Auth::user()->id }}">
+                            <!-- Customer ID (select option) -->
+                            <div class="mb-3 row">
+                                <label for="customer_id" class="col-md-4 col-form-label text-md-end text-start">Customer ID</label>
+                                <div class="col-md-6">
+                                    <select class="form-select @error('customer_id') is-invalid @enderror" id="customer_id" name="customer_id">
+                                        <option value="">Select Customer</option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @elseif (Auth::user()->hasRole('Customer'))
+                            <!-- Customer ID (current user ID) -->
+                            <input type="hidden" name="customer_id" value="{{ Auth::user()->id }}">
+                            
+                            <!-- Agent ID (select option) -->
+                            <div class="mb-3 row">
+                                <label for="agent_id" class="col-md-4 col-form-label text-md-end text-start">Agent ID</label>
+                                <div class="col-md-6">
+                                    <select class="form-select @error('agent_id') is-invalid @enderror" id="agent_id" name="agent_id">
+                                        <option value="">Select Agent</option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+
+                    <div class="mb-3 row">
+                        <label for="amount" class="col-md-4 col-form-label text-md-end text-start">Amount</label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" value="{{ old('amount') }}">
+                            @error('amount')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
 
                     <div class="mb-3 row">
                         <label for="image" class="col-md-4 col-form-label text-md-end text-start">Image</label>
@@ -84,5 +163,12 @@
         </div>
     </div>    
 </div>
-    
+<script>
+    ClassicEditor
+    .create( document.querySelector( '.text-editor' ) )
+    .catch( error => {
+    console.error( error );
+    });
+</script>
+
 @endsection

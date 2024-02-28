@@ -7,42 +7,28 @@
         @can('create-product')
             <a href="{{ route('products.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Product</a>
         @endcan
-        <div class="table-responsive">
         <table class="table table-striped table-bordered" id="datatable">
             <thead>
                 <tr id="hidden">
                 <th scope="col">S#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
-                <th scope="col">Targeted Number</th>
-                <th scope="col">Amount</th>
-                <th scope="col">User_id</th>
                 <th scope="col">Action</th>
                 </tr>
                 <tr id="show">
                 <td scope="col">S#</td>
                 <td scope="col">Name</td>
                 <td scope="col">Description</td>
-                <th scope="col">Targeted Number</th>
-                <th scope="col">Amount</th>
-                <th scope="col">User_id</th>
-
                 <td scope="col">Action</td>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($products as $product)
                 <tr>
-                    <td scope="row"><span>ID : </span>{{ $loop->iteration }}</td>
-                    <td><span>Name</span>{{ $product->name }}</td>
-
-
-                    <td><span>Decription</span>{!! html_entity_decode($product->description) !!}</td>
-                    <!--td><span>Decription</span>{{ $product->description }}</td -->
-                    <td><span>Targeted Number</span>{{ $product->targeted_number }}</td>
-                    <td><span>Amount</span>{{ $product->amount }}</td>
-                    <td><span>User_id</span>{{ $product->user->name }} </td>
-                    <td><span>Action</span> 
+                    <td scope="row"><span>id : </span>{{ $loop->iteration }}</td>
+                    <td><span>name</span>{{ $product->name }}</td>
+                    <td><span>decription</span>{{ $product->description }}</td>
+                    <td><span>action</span>
                         <form action="{{ route('products.destroy', $product->id) }}" method="post">
                             @csrf
                             @method('DELETE')
@@ -68,7 +54,6 @@
                 @endforelse
             </tbody>
         </table>
-        </div>
 
         {{ $products->links() }}
 

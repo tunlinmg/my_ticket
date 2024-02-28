@@ -19,7 +19,10 @@
     <!-- css for datatable is not need 
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    -->
+-->
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
