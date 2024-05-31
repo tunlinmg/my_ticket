@@ -8,10 +8,18 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
+use App\Models\FileUpload;
+use App\Http\Requests\StoreFileUploadRequest;
+use App\Http\Requests\UpdateFileUploadRequest;
+
+use App\Http\Controllers\Controller;
+//use App\Http\Controllers\FileUploadController;
+
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+
 //use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -98,7 +106,6 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request): RedirectResponse
     {
         try {
-
             // IMAGE UPLOAD HANDLING (before product creation)
             $image = $request->file('image');
             $imageName = null;
@@ -112,7 +119,7 @@ class ProductController extends Controller
             }
 
             // PRODUCT CREATION WITH IMAGE PATH (if applicable)
-            Product::create([
+            $product = Product::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'category_id' => $request->category_id,
@@ -122,13 +129,51 @@ class ProductController extends Controller
                 'user_id' => auth()->user()->id,
                 'agent_id' => $request->agent_id,
                 'customer_id' => $request->customer_id,
-                
             ]);
+
+            // Handle single file FileUpload
+
+            /*
+            if ($request->hasFile('file_name')) {
+                $file = $request->file('file_name');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('uploads', $fileName, 'public');
+
+                // Save file information in the Fileupload table
+                Fileupload::create([
+                    'file_name' => $fileName,
+                    'product_id' => $product->id,
+                ]);
+            }
+            */
+
+            //-----------
+
+
+
+            // Handle file upload
+            if ($request->hasFile('file_name')) {
+                foreach ($request->file('file_name') as $file) {
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('uploads', $fileName, 'public');
+
+            // Save file information in the Fileupload table
+                    Fileupload::create([
+                        'file_name' => $fileName,
+                        'product_id' => $product->id,
+                    ]);
+                }
+            }          
+
+
             return redirect()->route('products.create')
                 ->withSuccess('New product is added successfully.');
         } catch (\Exception $exception) {
             // Log the error for debugging
             Log::error('Error creating product: ' . $exception->getMessage());
+
+
+
 
             // Redirect back to the create form with a clear error message
             return redirect()->back()->withErrors(['error' => 'Failed to create product. Please try again.']);

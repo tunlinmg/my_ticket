@@ -147,12 +147,26 @@
                     <div class="mb-3 row">
                         <label for="image" class="col-md-4 col-form-label text-md-end text-start">Image</label>
                         <div class="col-md-6">
-                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" multiple>
                             @error('image')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
+
+                    
+                    <div class="mb-3 row">
+                        <label for="file" class="col-md-4 col-form-label text-md-end text-start">File</label>
+                        <div class="col-md-6">
+                            <input type="file" class="form-control @error('file_name') is-invalid @enderror" id="file_name" name="file_name[]" multiple>
+                            @error('file_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    
+
 
                     <div class="mb-3 row">
                         <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Product">

@@ -57,6 +57,8 @@ class StoreProductRequest extends FormRequest
                 Rule::exists('users', 'id'), // Validation rule for user_id field
             ],
 
+
+
             
 
             // Add other validation rules for additional fields if needed

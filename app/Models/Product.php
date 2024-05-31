@@ -35,5 +35,11 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Define the relationship with FileUpload
+    public function fileUploads()
+    {
+        return $this->hasMany(FileUpload::class);
+    }
     
 }

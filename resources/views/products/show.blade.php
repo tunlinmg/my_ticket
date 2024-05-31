@@ -35,25 +35,23 @@
                         <label for="category" class="col-md-4 col-form-label text-md-end text-start"><strong>Category:</strong></label>
                         <div class="col-md-6" style="line-height: 35px;">
                             {{ $product->category->name }}
-
                         </div>
                     </div>
-
-
-                    <!--  div class="row">
+                    <!--testing for normal image with Storage::url method -->
+                    <!--div class="row">
                         <label for="image" class="col-md-4 col-form-label text-md-end text-start"><strong>Image:</strong></label>
                         <div class="col-md-6" style="line-height: 35px;">
-                             <img src="{{ asset('storage/product_images/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 100%;" >
-                            
+                             <img src="{{ Storage::url('product_images/' . $product->image)}}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 100%;" >
+                                                 
                         </div>
-                    </div -->
+                    </div-->
 
-                    <!-- normal image-->
 
                     <div class="row">
                         <label for="image" class="col-md-4 col-form-label text-md-end text-start"><strong>Image:</strong></label>
                         <div class="col-md-6">
                             <!-- Image clickable to open modal -->
+                            <!-- normal image-->
                             <img src="{{ asset('storage/product_images/' . $product->image) }}" class="img-fluid" alt="{{ $product->name }}" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal">
 
                             <!-- Modal for large image -->
@@ -72,14 +70,57 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <label for="uploaded_files" class="col-md-4 col-form-label text-md-end text-start"><strong>Uploaded Files:</strong></label>
+                        <div class="col-md-6" style="line-height: 35px;">
+                            
+                            <ul>
+                                @foreach ($product->fileuploads as $file)
+                                    <li><a href="{{ asset('storage/uploads/' . $file->file_name) }}" target="_blank">{{ $file->file_name }}</a></li>
+                                @endforeach
+                            </ul>
+
+                        </div>
+                    </div>
 
                     <div class="row">
-                        <label for="category" class="col-md-4 col-form-label text-md-end text-start"><strong>Image:</strong></label>
+                        <label for="category" class="col-md-4 col-form-label text-md-end text-start"><strong>Category:</strong></label>
                         <div class="col-md-6" style="line-height: 35px;">
 
                             {{ $product->category->name }}
                         </div>
                     </div>
+
+                    
+                    <div class="">
+                    <!-- Buttons row -->
+                    <div class="row g-2">
+                        <div class="col">
+                            <a href="{{ route('products.index') }}" class="btn btn-secondary w-100">All</a>
+                        </div>
+
+                        <div class="col">
+                            <a href="{{ route('products.create') }}" class="btn btn-secondary w-100">New</a>
+                        </div>
+                        
+                        <div class="col">
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-secondary w-100">Edit</a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ route('products.show', $product->id) }}" class="btn btn-secondary w-100">Detail</a>
+                        </div>
+                        
+                        <div class="col">
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-secondary w-100" onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
 
                     <hr>
 
@@ -110,6 +151,7 @@
                       <input type="submit" value="Add Comment" class="btn btn-secondary">
                     </form>
                     @endauth
+
         
             </div>
         </div>

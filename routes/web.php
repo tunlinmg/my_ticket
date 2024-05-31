@@ -39,11 +39,21 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+
+
+/*
+Route::resource('fileuploads', FileUploadController::class);
+*/
+
 Route::resources([
     'roles' => RoleController::class,
     'users' => UserController::class,
     'products' => ProductController::class,
     'comments' => CommentController::class,
     'categories' => CategoryController::class,
+    'fileuploads' => FileUploadController::class,
 ]);
+
+
+
 Route::get('/comments/destroy/{comment}', [CommentController::class,'destroy']);
