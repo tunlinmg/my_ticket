@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request; // Import the Request class
+
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Product;
@@ -41,11 +43,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+
+
+/**
+
+    public function index(Request $request): View
     {
+        $categories = Category::all(); // Assuming 'Category' is your model
 
         // Fetch all products
-
     $products = Product::latest()->paginate(10);
 
     // Authorize each product individually
@@ -60,31 +66,37 @@ class ProductController extends Controller
                 ->latest()->paginate(10);
         }
 
-    // Return the view with products data
-    return view('products.index', compact('products'));
-
-        /*return view('products.index', [
-            'products' => Product::latest()->paginate(10)
-        ]);*/
-        
-        /*
-        $this->authorize('show', Product::class);
-
-            if (auth()->user()->hasRole(['Admin', 'Super Admin'])) {
-            // If the user is Admin or Super Admin, fetch all products
-            $products = Product::latest()->paginate(10);
-        } else {
-            // Otherwise, fetch products posted by the current logged-in user
-            $products = Product::where('user_id', auth()->user()->id)
-                ->latest()->paginate(10);
+    // Filter products by category if a category is selected
+        if ($request->has('category')) {
+            $products = $products->where('category_id', $request);
         }
 
-        return view('products.index', compact('products'));
-        */
-
-    
+    // Return the view with products data
+    return view('products.index', compact('categories','products'));
 
     }
+
+**/  
+
+    public function index(Request $request): View
+    {
+        // Fetch all categories
+        $categories = Category::all();
+
+        // Initialize the base query
+        $query = auth()->user()->hasRole(['Admin', 'Super Admin']) ? Product::query() : Product::where('user_id', auth()->user()->id);
+
+        // Filter products by category if a category is selected
+        if ($request->has('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Paginate the results
+        $products = $query->latest()->paginate(10);
+
+        // Return the view with products and categories data
+        return view('products.index', compact('products', 'categories'));
+    } 
 
     /**
      * Show the form for creating a new resource.

@@ -27,41 +27,60 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style type="text/css">
-* {
-    box-sizing: border-box;
-    font-family: "Avenir", "Helvetica", sans-serif;
-}
+        * {
+            box-sizing: border-box;
+            font-family: "Avenir", "Helvetica", sans-serif;
+        }
 
-body {
-    background-color: #f9f9f9;
-    margin: 0;
-}
+        body {
+            background-color: #f9f9f9;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-/* Default table styles for this demo */
-table {
-    border-collapse: collapse;
-    text-align: left;
-    width: 80%;
-}
-table tr {
-    background: white;
-    border-bottom: 1px solid;
-}
-table th, table td {
-    padding: 10px 20px;
-}
-table td span {
-    background: #eee;
-    color: dimgrey;
-    display: none;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 5px;
-    position: relative;
-    text-transform: uppercase;
-    top: 0;
-    left: 0;
-}
+        /* Default table styles for this demo */
+        table {
+            border-collapse: collapse;
+            text-align: left;
+            width: 80%;
+        }
+        table tr {
+            background: white;
+            border-bottom: 1px solid;
+        }
+        table th, table td {
+            padding: 10px 20px;
+        }
+        table td span {
+            background: #eee;
+            color: dimgrey;
+            display: none;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 5px;
+            position: relative;
+            text-transform: uppercase;
+            top: 0;
+            left: 0;
+        }
+
+/*for sidebar*/
+        .sidebar {
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
 
 /* Simple CSS for flexbox table on mobile */
 @media(max-width: 800px) {
@@ -112,7 +131,7 @@ table td span {
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    AllPHPTricks.com
+                    Home
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -189,16 +208,17 @@ table td span {
                         </div>
                         @endif
 
-                        <h3 class="text-center mt-3 mb-3">Simple Laravel 10 User Roles and Permissions - <a href="https://www.allphptricks.com/">AllPHPTricks.com</a></h3>
-                        @yield('content')
-                        
+                        <h3 class="text-center mt-3 mb-3">Ministry of Information - <a href="{{ url('/') }}">Dashboard</a></h3>
+
+                        <div>@yield('content')</div>
+
                         <div class="row justify-content-center text-center mt-3">
                             <div class="col-md-12">
                                 <p>Back to Tutorial: 
                                     <a href="https://www.allphptricks.com/simple-laravel-10-user-roles-and-permissions/"><strong>Tutorial Link</strong></a>
                                 </p>
                                 <p>
-                                    For More Web Development Tutorials Visit: <a href="https://www.allphptricks.com/"><strong>AllPHPTricks.com</strong></a>
+                                    For More Information Visit: <a href="https://moi.gov.mm/"><strong>Official website</strong></a>
                                 </p>
                             </div>
                         </div>

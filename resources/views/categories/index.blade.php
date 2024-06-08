@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header">Product List</div>
+
+    <div class="card-header">Categoris List</div>
     <div class="card-body">
         @can('create-category')
             <a href="{{ route('categories.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Category</a>

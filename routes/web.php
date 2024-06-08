@@ -57,3 +57,4 @@ Route::resources([
 
 
 Route::get('/comments/destroy/{comment}', [CommentController::class,'destroy']);
+

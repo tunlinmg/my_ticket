@@ -37,6 +37,9 @@ class CategoryController extends Controller
         return view('categories.index', [
             'categories' => Category::latest()->paginate(10)
         ]);
+
+        
+
     }
 
     /**
